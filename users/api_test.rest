@@ -6,14 +6,22 @@ GET {{baseUrl}}/setup
 
 GET {{baseUrl}}
 
+###
+
+GET {{baseUrl}}/users
 
 ###
 
-POST {{baseUrl}}
+GET {{baseUrl}}/users/1
+
+
+###
+
+POST {{baseUrl}}/users
 Content-Type: application/json
 
 {
-    "name": "Deepak",
-    "location": "New Delhi"
+    "email": "deepak@gmail.com",
+    "name": "Deepak"
 }
 
