@@ -1,4 +1,4 @@
-fastapi-restful
+fastapi
 uvicorn
 sqlalchemy
 psycopg2-binary

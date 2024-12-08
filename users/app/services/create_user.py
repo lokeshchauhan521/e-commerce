@@ -1,10 +1,9 @@
 from sqlalchemy.orm import Session
+from fastapi import Depends
 from ..models import user as UserModel
-from sqlalchemy.orm import Session
 from ..db.get_db import get_db
 from ..models import user as UserModel
 from ..schemas import user as UserSchema
-from fastapi import Depends
 from fastapi_utils import Resource
 
 

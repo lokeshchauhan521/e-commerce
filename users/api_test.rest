@@ -12,6 +12,10 @@ GET {{baseUrl}}/users
 
 ###
 
+POST {{baseUrl}}/users
+
+###
+
 GET {{baseUrl}}/users/1
 
 
