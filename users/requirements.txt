@@ -2,3 +2,5 @@ fastapi-restful
 uvicorn
 sqlalchemy
 psycopg2-binary
+fastapi_utils
+typing-inspect

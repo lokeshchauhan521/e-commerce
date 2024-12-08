@@ -16,8 +16,11 @@ GET {{baseUrl}}/users/1
 
 
 ###
+GET {{{{baseUrl}}}}/test
 
-POST {{baseUrl}}/users
+###
+
+POST {{baseUrl}}/create-user
 Content-Type: application/json
 
 {
