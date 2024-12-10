@@ -8,11 +8,9 @@ GET {{baseUrl}}
 
 ###
 
-GET {{baseUrl}}/users
+POST  {{baseUrl}}/sign-up
 
-###
 
-POST {{baseUrl}}/users
 
 ###
 
@@ -22,13 +20,26 @@ GET {{baseUrl}}/users/1
 ###
 GET {{{{baseUrl}}}}/test
 
+POST {{baseUrl}}/deel
+
 ###
 
-POST {{baseUrl}}/create-user
+POST {{baseUrl}}/sign-up
 Content-Type: application/json
 
 {
-    "email": "deepak@gmail.com",
-    "name": "Deepak"
+    "email": "lokesh@1212gmail.com",
+    "name": "lokesh",
+    "password":"lokesh@123"
+}
+
+###
+
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+    "email": "lokesh@1212gmail.com",
+    "password":"lokesh@123"
 }
 

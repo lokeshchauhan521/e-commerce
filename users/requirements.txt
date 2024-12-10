@@ -4,3 +4,8 @@ sqlalchemy
 psycopg2-binary
 fastapi_utils
 typing-inspect
+pyjwt
+passlib[bcrypt]
+python-jose
+alembic
+python-dotenv
