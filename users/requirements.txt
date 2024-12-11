@@ -7,5 +7,4 @@ typing-inspect
 pyjwt
 passlib[bcrypt]
 python-jose
-alembic
 python-dotenv
