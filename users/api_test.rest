@@ -17,18 +17,18 @@ POST {{baseUrl}}/sign-up
 Content-Type: application/json
 
 {
-    "email": "lokesh@1122gmail.com",
+    "email": "lokesh@11s2s2gmail.com",
     "name": "lokesh",
     "password":"lokesh@123"
 }
 
 ###
 
-POST {{baseUrl}}/login
+POST {{baseUrl}}/sign-in
 Content-Type: application/json
 
 {
-    "email": "lokesh@12gmail.com",
+    "email": "lokesh@1122gmail.com",
     "password":"lokesh@123"
 }
 

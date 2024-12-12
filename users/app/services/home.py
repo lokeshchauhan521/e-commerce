@@ -1,6 +1,3 @@
-from fastapi_utils import Resource
-class Home(Resource):
+class Home:
     def get(self):
-        return {
-               "suceess" : "application working fine "
-            }
+        return {"suceess": "application working fine "}

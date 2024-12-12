@@ -1,11 +1,9 @@
 from fastapi import Depends
-from ..services.get_user import Get_user
-from ..services.create_user import Create_user
-from ..services.test import Test
+from ..services.get_users import GetUsers
+from ..services.auth.sign_up import SignUp
 from ..services.home import Home
+from ..services.auth.sign_in import SignIn
 from fastapi_utils import Api
-from app.core.auth.dependencies import get_current_user
-from app.services.login import Login
 
 def get_route_map():
     return [
@@ -15,25 +13,20 @@ def get_route_map():
             "dependencies": [], 
         },
         {
-            "router": Get_user(),
+            "router": GetUsers(),
             "path": "/users",
             "dependencies": [],
         },
         {
-            "router": Create_user(),
+            "router": SignUp(),
             "path": "/sign-up",
             "dependencies": [],
         },
-         {
-            "router": Test(),
-            "path": "/test",
+        {
+            "router": SignIn(),
+            "path": "/sign-in",
             "dependencies": [],
-        },
-                 {
-            "router": Login(),
-            "path": "/login",
-            "dependencies": [],
-        },
+        }
     ]
 
 def routing(app):
