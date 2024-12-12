@@ -17,7 +17,7 @@ def get_route_map():
         {
             "router": Get_user(),
             "path": "/users",
-            "dependencies": [get_current_user],
+            "dependencies": [],
         },
         {
             "router": Create_user(),

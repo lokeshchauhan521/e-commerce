@@ -23,7 +23,7 @@ class  Create_user(Resource):
         new_user = User(
             email=request.email, 
             name=request.name,
-            password=hashed_password 
+            password=hashed_password,
         )
 
         db.add(new_user)
