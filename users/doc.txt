@@ -14,7 +14,7 @@ PERFORM DATABASE MIGRATION --------------
 
     OR ------
 
-    docker exec -it a1b18cb137f2 sh -c "alembic revision --autogenerate -m 'Initial migration' && alembic upgrade head"
+    docker exec -it 09ab6eea4bfb alembic revision --autogenerate -m "Initial migration" && docker exec -it 09ab6eea4bfb alembic upgrade head
 
     OR (Update docker file) ------
     

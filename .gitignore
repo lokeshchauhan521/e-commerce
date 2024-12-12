@@ -21,4 +21,4 @@ logs/
 poetry.lock
 pip-wheel-metadata/
 
-migrations/versions
+*/migrations/versions
