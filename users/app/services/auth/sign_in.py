@@ -17,5 +17,5 @@ class SignIn:
         if not verify_password(request.password, user.password):
             raise HTTPException(status_code=400, detail="Invalid credentials")
 
-        access_token = create_access_token(data={"sub": user.email})
+        access_token = create_access_token(data={"userEmail": user.email})
         return {"access_token": access_token, "token_type": "bearer"}

@@ -28,10 +28,10 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
 def decode_access_token(token: str) -> TokenData:
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        username: str = payload.get("sub")
-        if username is None:
+        userEmail: str = payload.get("userEmail")
+        if userEmail is None:
             raise ValueError("Invalid token")
-        return TokenData(username=username)
+        return TokenData(username=userEmail)
     except jwt.ExpiredSignatureError:
         raise ValueError("Token has expired")
     except jwt.InvalidTokenError:

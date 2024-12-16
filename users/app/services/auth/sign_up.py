@@ -4,7 +4,7 @@ from app.core.config.db import get_db
 from app.core.auth.security import hash_password
 from app.models.user import User
 from app.schemas.user import user as UserSchema
-from app.core.responser.responser import Responser
+from app.core.utils.responser.responser import Responser
 
 
 class SignUp:

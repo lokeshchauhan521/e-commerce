@@ -23,8 +23,8 @@ class Responser:
     def response_201(self) -> JSONResponse:
         return self._response("Created", 201)
 
-    def response_400(self) -> JSONResponse:
-        return self._response("Bad Request", 400)
+    def response_400(self,msg: str = "Bad Request") -> JSONResponse:
+        return self._response(msg, 400)
 
     def response_401(self) -> JSONResponse:
         return self._response("Unauthorized", 401)

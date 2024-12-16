@@ -3,7 +3,9 @@ from ..services.get_users import GetUsers
 from ..services.auth.sign_up import SignUp
 from ..services.home import Home
 from ..services.auth.sign_in import SignIn
+from ..services.auth.profile import Profile
 from fastapi_utils import Api
+from app.core.auth.dependencies import get_current_user
 
 def get_route_map():
     return [
@@ -26,6 +28,11 @@ def get_route_map():
             "router": SignIn(),
             "path": "/sign-in",
             "dependencies": [],
+        },
+        {
+            "router": Profile(),
+            "path": "/profile",
+            "dependencies": [get_current_user],
         }
     ]
 
