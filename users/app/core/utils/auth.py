@@ -9,7 +9,7 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
 class TokenData(BaseModel):
-    userEmail: str | None = None
+    email: str | None = None
 
 
 def hash_password(password: str) -> str:
@@ -34,12 +34,12 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
 
 def decode_access_token(token: str) -> TokenData:
     if not token:
-        return TokenData(userEmail=None)
+        return TokenData(email=None)
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        user_email: Optional[str] = payload.get("userEmail")
+        user_email: Optional[str] = payload.get("email")
         if not user_email:
-            return TokenData(userEmail=None)
-        return TokenData(userEmail=user_email)
+            return TokenData(email=None)
+        return TokenData(email=user_email)
     except:
-        return TokenData(userEmail=None)
+        return TokenData(email=None)

@@ -2,23 +2,17 @@ from sqlalchemy.orm import Session
 from fastapi import Depends, HTTPException, status
 from app.core.config.db import get_db
 from app.core.utils.auth import hash_password
+from app.core.utils.auth import create_access_token
 from app.models.user import User
 from app.schemas.user import user as UserSchema
-from app.core.utils.responser import Responser
+from app.core.utils.api_response import ResponseFailure, ResponseSuccess
 
 
 class SignUp:
     def post(self, request: UserSchema.UserSignUp, db: Session = Depends(get_db)):
         db_user = db.query(User).filter(User.email == request.email).first()
-        data = {}
         if db_user:
-            # return HTTPException(
-            #     status_code=status.HTTP_400_BAD_REQUEST,
-            #     detail="Email already registered",
-            # )
-            payload = Responser(data)
-            return payload.response_400()
-
+            raise ResponseFailure("User already exists")
         hashed_password = hash_password(request.password)
 
         new_user = User(
@@ -30,11 +24,11 @@ class SignUp:
         db.add(new_user)
         db.commit()
         db.refresh(new_user)
-        data["email"] = new_user.email
-        data["name"] = new_user.name
-        # return {
-        #     "message": "User created successfully",
-        #     "user": {"email": new_user.email, "name": new_user.name},
-        # }
-        payload = Responser(data)
-        return payload.response_201()
+
+        access_token = create_access_token(data={"email": new_user.email})
+        new_user.password = None
+        return ResponseSuccess(
+            "Account created successfylly",
+            {"profile": new_user, "access_token": access_token},
+            201,
+        )

@@ -14,9 +14,9 @@ async def get_current_user(token: str = Depends(oauth2_scheme), db=Depends(get_d
     print(token)
     if token:
         token_data = decode_access_token(token)
-        if token_data.userEmail is None:
+        if token_data.email is None:
             return payload.response_400("Invalid Token")
-        user_data = db.query(User).filter(User.email == token_data.userEmail).first()
+        user_data = db.query(User).filter(User.email == token_data.email).first()
         if not user_data:
             payload.response_400("User not found")
         print("=============adadadad", data)

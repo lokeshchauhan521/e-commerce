@@ -33,9 +33,9 @@ class Profile:
         # if token:
         #     token_data = decode_access_token(token)
         #     print("=======2525252=========acca>a",token_data)
-        #     if token_data.userEmail is None:
+        #     if token_data.email is None:
         #         return payload.response_400("Invalid Token")
-        #     user_data = db.query(User).filter(User.email==token_data.userEmail).first()
+        #     user_data = db.query(User).filter(User.email==token_data.email).first()
         #     if not user_data:
         #         payload.response_400("User not found")
         #     data["user_profile"] = {
