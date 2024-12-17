@@ -3,15 +3,22 @@ from fastapi.security import OAuth2PasswordBearer
 from app.core.auth.security import decode_access_token
 from app.core.config.db import get_db
 from app.models.user import User
+from app.core.utils.responser.responser import Responser
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
-async def get_current_user(token: str = Depends(oauth2_scheme), db=Depends(get_db)):
-    token_data = decode_access_token(token)
-    user = db.query(User).filter(User.username == token_data.username).first()
-    if user is None:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="User not found",
-        )
-    return user
+async def   get_current_user(token: str = Depends(oauth2_scheme), db=Depends(get_db)):
+    data = {}
+    payload = Responser(data)
+    print(token)
+    if token:
+            token_data = decode_access_token(token)
+            if token_data.userEmail is None:
+                return payload.response_400("Invalid Token")
+            user_data = db.query(User).filter(User.email==token_data.userEmail).first()
+            if not user_data:
+                payload.response_400("User not found")
+            print("=============adadadad",data)
+            return user_data
+    else:
+        return None
