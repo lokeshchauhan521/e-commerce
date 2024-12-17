@@ -33,15 +33,13 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
 
 
 def decode_access_token(token: str) -> TokenData:
-    if token:
-        try:
-            payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        except:
+    if not token:
+        return TokenData(userEmail=None)
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        user_email: Optional[str] = payload.get("userEmail")
+        if not user_email:
             return TokenData(userEmail=None)
-        print("adfafafwqe3ec=======>", payload)
-        userEmail: str = payload.get("userEmail")
-        if userEmail is None:
-            return ValueError("Invalid token")
-        return TokenData(userEmail=userEmail)
-    else:
+        return TokenData(userEmail=user_email)
+    except:
         return TokenData(userEmail=None)
