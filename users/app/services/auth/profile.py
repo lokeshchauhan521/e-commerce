@@ -1,20 +1,24 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
-from app.core.auth.dependencies import get_current_user
+from app.middlewares.dependencies import get_current_user
 from app.core.config.db import get_db
-from app.core.auth.security import decode_access_token 
-from app.core.auth.dependencies import oauth2_scheme
-from app.core.utils.responser.responser import Responser
-from app.models.user import User 
+from app.core.utils.auth import decode_access_token
+from app.middlewares.dependencies import oauth2_scheme
+from app.core.utils.responser import Responser
+from app.models.user import User
+
+
 class Profile:
-    async def post(self, token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+    async def post(
+        self, token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)
+    ):
         User = get_current_user()
-        payload =  Responser()
+        payload = Responser()
         if User is None:
             return payload.response_400("Invalid token")
-        
-        return 
-            
+
+        return
+
         # data  = {}
         # payload = Responser()
         # user_data = get_current_user(token)
@@ -23,7 +27,7 @@ class Profile:
         #     "email" : user_data.email,
         #     "name" : user_data.name
         # }
-        # return payload.response_200()   
+        # return payload.response_200()
         # data = {}
         # payload = Responser(data)
         # if token:

@@ -1,8 +1,8 @@
 from fastapi import Depends
 from sqlalchemy.orm import Session
 from app.core.config.db import get_db
+from app.core.utils.responser import Responser
 from ..models import user as UserModel
-from app.core.utils.responser.responser import Responser
 
 
 class GetUsers:

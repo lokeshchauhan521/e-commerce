@@ -5,14 +5,15 @@ from ..services.home import Home
 from ..services.auth.sign_in import SignIn
 from ..services.auth.profile import Profile
 from fastapi_utils import Api
-from app.core.auth.dependencies import get_current_user
+from app.middlewares.dependencies import get_current_user
+
 
 def get_route_map():
     return [
         {
             "router": Home(),
             "path": "/",
-            "dependencies": [], 
+            "dependencies": [],
         },
         {
             "router": GetUsers(),
@@ -33,18 +34,22 @@ def get_route_map():
             "router": Profile(),
             "path": "/profile",
             "dependencies": [get_current_user],
-        }
+        },
     ]
 
+
 def routing(app):
-    route_map = get_route_map() 
+    route_map = get_route_map()
     for obj in route_map:
         dec_list = obj.get("dependencies", [])
         api = Api(app)
-        api.add_resource(obj["router"], obj["path"],dependencies=[Depends(d) for d in dec_list])
+        api.add_resource(
+            obj["router"], obj["path"], dependencies=[Depends(d) for d in dec_list]
+        )
+
 
 # def routing(app):
-#     route_map = get_route_map()  
+#     route_map = get_route_map()
 #     for obj in route_map:
 #         dec_list = obj.get('decorators', [])
 #         api = Api(app) if not dec_list else Api(app, dependencies=[Depends(d) for d in dec_list])

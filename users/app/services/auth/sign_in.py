@@ -2,8 +2,8 @@ from fastapi import Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.models.user import User
 from app.core.config.db import get_db
-from app.core.auth.security import verify_password
-from app.core.auth.security import create_access_token
+from app.core.utils.auth import verify_password
+from app.core.utils.auth import create_access_token
 from app.schemas.user import user as UserSchema
 
 

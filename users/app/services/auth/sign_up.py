@@ -1,16 +1,16 @@
 from sqlalchemy.orm import Session
 from fastapi import Depends, HTTPException, status
 from app.core.config.db import get_db
-from app.core.auth.security import hash_password
+from app.core.utils.auth import hash_password
 from app.models.user import User
 from app.schemas.user import user as UserSchema
-from app.core.utils.responser.responser import Responser
+from app.core.utils.responser import Responser
 
 
 class SignUp:
     def post(self, request: UserSchema.UserSignUp, db: Session = Depends(get_db)):
         db_user = db.query(User).filter(User.email == request.email).first()
-        data = { }
+        data = {}
         if db_user:
             # return HTTPException(
             #     status_code=status.HTTP_400_BAD_REQUEST,
