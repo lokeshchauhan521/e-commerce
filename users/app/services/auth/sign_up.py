@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from fastapi import Depends, HTTPException, status
+from fastapi import Depends
 from app.core.config.db import get_db
 from app.core.utils.auth import hash_password
 from app.core.utils.auth import create_access_token

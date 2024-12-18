@@ -1,11 +1,12 @@
 from fastapi import Depends
+from fastapi_utils import Api
 from ..services.get_users import GetUsers
 from ..services.auth.sign_up import SignUp
 from ..services.home import Home
 from ..services.auth.sign_in import SignIn
-from ..services.auth.profile import Profile
-from fastapi_utils import Api
-from app.middlewares.dependencies import get_current_user
+from ..services.profile.profile import Profile
+
+secured_routes: list[str] = []
 
 
 def get_route_map():
@@ -33,7 +34,8 @@ def get_route_map():
         {
             "router": Profile(),
             "path": "/profile",
-            "dependencies": [get_current_user],
+            "dependencies": [],
+            "requiredAuth": True,
         },
     ]
 
@@ -46,6 +48,8 @@ def routing(app):
         api.add_resource(
             obj["router"], obj["path"], dependencies=[Depends(d) for d in dec_list]
         )
+        if obj.get("requiredAuth") == True:
+            secured_routes.append(obj["path"])
 
 
 # def routing(app):

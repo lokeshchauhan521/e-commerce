@@ -1,3 +1,4 @@
+from fastapi.security import OAuth2PasswordBearer
 from pydantic import BaseModel
 from datetime import datetime, timedelta, timezone
 from typing import Optional
@@ -5,7 +6,9 @@ import jwt
 from passlib.context import CryptContext
 from ..config.environment import ACCESS_TOKEN_EXPIRE_MINUTES, ALGORITHM, SECRET_KEY
 
+
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 
 class TokenData(BaseModel):
@@ -32,14 +35,11 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 
 
-def decode_access_token(token: str) -> TokenData:
-    if not token:
-        return TokenData(email=None)
+def decode_access_token(token: str) -> TokenData | None:
     try:
+        # return jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        user_email: Optional[str] = payload.get("email")
-        if not user_email:
-            return TokenData(email=None)
-        return TokenData(email=user_email)
-    except:
-        return TokenData(email=None)
+        return TokenData(**payload)
+    except Exception as e:
+        print(f"Error decoding token: {e}")
+    return None

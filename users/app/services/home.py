@@ -1,3 +1,6 @@
+from app.core.utils.api_response import ResponseSuccess
+
+
 class Home:
     def get(self):
-        return {"suceess": "application working fine "}
+        return ResponseSuccess("Server is up and running")
