@@ -1,7 +1,15 @@
-from sqlalchemy import Column, Integer, String, Float, Text, DateTime, ForeignKey, Table
+from sqlalchemy import Column, Integer, String, Float, Text, DateTime, ForeignKey, Table 
 from sqlalchemy.orm import relationship
-from datetime import datetime
+from datetime import datetime , timezone
 from ..core.config.db import Base
+
+# # Association table for many-to-many relationship between Product and Category
+# product_categories = Table(
+#     'product_categories',
+#     Base.metadata,
+#     Column('product_id', Integer, ForeignKey('products.product_id'), primary_key=True),
+#     Column('category_id', Integer, ForeignKey('categories.category_id'), primary_key=True)
+# )
 
 class Product(Base):
     __tablename__ = 'products'
@@ -12,39 +20,27 @@ class Product(Base):
     stock = Column(Integer, default=0, nullable=False)
     price = Column(Float, nullable=False)
     rating = Column(Float, nullable=True)
-    created_at = Column(DateTime, default=datetime.timezone.utc, nullable=False)
-    updated_at = Column(DateTime, default=datetime.timezone.utc, onupdate=datetime.timezone.utc, nullable=False)
-    primary_image = Column(String)
-    image_list = Column(String)
-    brand = Column(String(255))
-    # Relationships
-    categories = relationship('Category', secondary='product_categories', back_populates='products')
-    brand_id = Column(Integer, ForeignKey('brands.brand_id'), nullable=True)
-    brand = relationship('Brand', back_populates='products')
+    primary_image = Column(String(255), nullable=False)
+    image_list= Column(String)
+    brand = Column(String)
+    created_at = Column(DateTime, default=datetime.now(timezone.utc), nullable=False)
+    updated_at = Column(DateTime, default=datetime.now(timezone.utc), onupdate=datetime.now(timezone.utc), nullable=False)
+   
+
+    # Many-to-Many relationship with Category
+    # categories = relationship('Category', secondary=product_categories, back_populates='products')
+
     def __repr__(self):
         return f"<Product(name={self.name}, price={self.price}, stock={self.stock})>"
 
+# class Category(Base):
+#     __tablename__ = 'categories'
 
+#     category_id = Column(Integer, primary_key=True, autoincrement=True)
+#     name = Column(String(255), nullable=False, unique=True)
 
-class Category(Base):
-    __tablename__ = 'categories'
+#     # Many-to-Many relationship with Product
+#     products = relationship('Product', secondary=product_categories, back_populates='categories')
 
-    category_id = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(String(255), nullable=False, unique=True)
-
-    products = relationship('Product', secondary=product_categories, back_populates='categories')
-
-    def __repr__(self):
-        return f"<Category(name={self.name})>"
-
-
-class Brand(Base):
-    __tablename__ = 'brands'
-
-    brand_id = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(String(255), nullable=False, unique=True)
-
-    products = relationship('Product', back_populates='brand')
-
-    def __repr__(self):
-        return f"<Brand(name={self.name})>"
+#     def __repr__(self):
+#         return f"<Category(name={self.name})>"
