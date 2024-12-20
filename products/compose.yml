@@ -6,13 +6,13 @@ services:
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: root
-      POSTGRES_DB: test_db_product
-    ports:
-      - 5433:5433
+      POSTGRES_DB: product_db
+    # ports:
+    #   - 5433:5432
     volumes:
       - pg_data_product:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U root -d test_db_product"]
+      test: ["CMD-SHELL", "pg_isready -U root -d product_db"]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -21,7 +21,7 @@ services:
     container_name: ecommerce_product_container
     build: .
     ports:
-      - 8001:8001
+      - 8001:8000
     volumes:
       - .:/app
     depends_on:
