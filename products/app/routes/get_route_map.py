@@ -2,7 +2,7 @@ from fastapi import Depends
 from fastapi_utils import Api
 from ..services.home import Home
 from ..services.product.product import AddProduct
-
+from ..services.category.add_category import AddCategory
 secured_routes: list[str] = []
 
 
@@ -16,6 +16,11 @@ def get_route_map():
               {
             "router": AddProduct(),
             "path": "/add-product",
+            "dependencies": [],
+        },
+           {
+            "router": AddCategory(),
+            "path": "/add-category",
             "dependencies": [],
         },
        

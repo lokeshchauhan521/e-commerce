@@ -7,8 +7,8 @@ class ProductBase(BaseModel):
     stock: int
     price: float
     rating: Optional[float]
-    primary_image: Optional[str]
-    image_list :Optional[str]
+    primary_image:str
+    image_list :Optional[List[str]]
     brand : Optional[str]
-
+    categories: int
 

@@ -23,7 +23,7 @@ class AddProduct:
                 rating=request.rating,
                 primary_image=request.primary_image,
                 image_list=request.image_list,
-                brand=request.brand
+                categories=request.category_objects
             )
             print("product values ", product)
             db.add(product)
