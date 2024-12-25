@@ -1,9 +1,9 @@
 from fastapi import Depends
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session , joinedload 
 from app.models.product import Product, Category
 from app.core.config.db import get_db
 from app.core.utils.api_response import ResponseSuccess, ResponseFailure
-from app.schemas.product.product import ProductBase
+from app.schemas.product.product import ProductBase ,FilterProductBase
 
 class AddProduct:
     async def post(self, request: ProductBase, db: Session = Depends(get_db)):
@@ -40,4 +40,40 @@ class AddProduct:
             return ResponseSuccess(message="Product added successfully", data={"product_id": product.product_id})
 
         except Exception as e:
+            raise ResponseFailure(message="failed", data={})
+        
+class GetProduct:
+    async def post(self, request: FilterProductBase , db:Session = Depends(get_db)):
+        try:
+            query = db.query(Product).options(joinedload(Product.categories))
+
+            '''
+            The joinedload option eagerly loads the categories
+            associated with the products, reducing database round-trips.
+            '''
+            if request.categories:
+                query = query.filter(
+                    Product.categories.any(Category.name.in_(request.categories))
+                )
+
+            products = query.all()
+
+            result = [
+                {
+                    "product_id": product.product_id,
+                    "name": product.name,
+                    "description": product.description,
+                    "stock": product.stock,
+                    "price": product.price,
+                    "rating": product.rating,
+                    "primary_image": product.primary_image,
+                    "categories": [category.name for category in product.categories],
+                }
+                for product in products
+            ]
+
+            return ResponseSuccess(message="success", data=result)
+
+        except Exception as e:
+            print(f"Error occurred: {e}")
             raise ResponseFailure(message="failed", data={})

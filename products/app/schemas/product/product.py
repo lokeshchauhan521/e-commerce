@@ -13,3 +13,5 @@ class ProductBase(BaseModel):
     categories: List[str]
 
 
+class FilterProductBase(BaseModel):
+    categories: List[str] = None
