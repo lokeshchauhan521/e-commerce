@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import List, Optional
 
 class ProductBase(BaseModel):
@@ -10,5 +10,6 @@ class ProductBase(BaseModel):
     primary_image:str
     image_list :Optional[List[str]]
     brand : Optional[str]
-    categories: int
+    categories: List[str]
+
 
