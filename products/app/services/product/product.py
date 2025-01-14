@@ -43,6 +43,28 @@ class AddProduct:
             raise ResponseFailure(message="failed", data={})
         
 class GetProduct:
+    async def get(db:Session = Depends(get_db)):
+        print("===================")
+        try:
+            products = db.query(Product).all()
+            result = [
+                {
+                    "product_id": product.product_id,
+                    "name": product.name,
+                    "description": product.description,
+                    "stock": product.stock,
+                    "price": product.price,
+                    "rating": product.rating,
+                    "primary_image": product.primary_image,
+                    "categories": [category.name for category in product.categories],
+                }
+                for product in products
+            ]
+            return ResponseSuccess(message="success", data=result)
+        except Exception as e:
+            print(f"Error occurred: {e}")
+            raise ResponseFailure(message="failed", data={})
+
     async def post(self, request: FilterProductBase , db:Session = Depends(get_db)):
         try:
             query = db.query(Product).options(joinedload(Product.categories))
