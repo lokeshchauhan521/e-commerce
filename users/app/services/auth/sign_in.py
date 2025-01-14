@@ -1,21 +1,22 @@
-from fastapi import Depends, HTTPException
+from fastapi import Depends
 from sqlalchemy.orm import Session
 from app.models.user import User
 from app.core.config.db import get_db
-from app.core.auth.security import verify_password
-from app.core.auth.security import create_access_token
+from app.core.utils.auth import verify_password
+from app.core.utils.auth import create_access_token
 from app.schemas.user import user as UserSchema
+from app.core.utils.api_response import ResponseFailure, ResponseSuccess
 
 
 class SignIn:
     def post(self, request: UserSchema.UserLogin, db: Session = Depends(get_db)):
-
         user = db.query(User).filter(User.email == request.email).first()
-        if user is None:
-            raise HTTPException(status_code=400, detail="Invalid credentials")
+        print(user)
+        if user is None or not verify_password(request.password, user.password):
+            raise ResponseFailure(message="Invalid credentials")
 
-        if not verify_password(request.password, user.password):
-            raise HTTPException(status_code=400, detail="Invalid credentials")
-
-        access_token = create_access_token(data={"sub": user.email})
-        return {"access_token": access_token, "token_type": "bearer"}
+        access_token = create_access_token(data={"email": user.email})
+        return ResponseSuccess(
+            message="Sign in successful",
+            data={"access_token": access_token, "token_type": "bearer"},
+        )

@@ -1,10 +1,10 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from .environment import USER_DB_URL
+from .environment import PRODUCT_DB_URL
 
 
-engine = create_engine(USER_DB_URL)
+engine = create_engine(PRODUCT_DB_URL)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
