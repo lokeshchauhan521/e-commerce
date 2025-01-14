@@ -1,0 +1,34 @@
+@baseUrl = http://127.0.0.1:8000
+
+GET {{baseUrl}}/setup
+
+###
+
+GET {{baseUrl}}
+
+###
+
+
+GET {{baseUrl}}/users
+
+###
+
+POST {{baseUrl}}/sign-up
+Content-Type: application/json
+
+{
+    "email": "lokesh@11s2s2gmail.com",
+    "name": "lokesh",
+    "password":"lokesh@123"
+}
+
+###
+
+POST {{baseUrl}}/sign-in
+Content-Type: application/json
+
+{
+    "email": "lokesh@1122gmail.com",
+    "password":"lokesh@123"
+}
+

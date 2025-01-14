@@ -1,0 +1,21 @@
+START
+    docker compose up --build --force-recreate 
+
+    
+PERFORM DATABASE MIGRATION --------------
+
+    Go Inside Docker Container:
+        docker exec -it <App Container Id> bash
+        psql -U root -d test_db
+
+        docker exec -it <Postgres Container Id> bash
+        alembic revision --autogenerate -m "Added users phone"
+        alembic upgrade head
+
+    OR ------
+
+    docker exec -it 09ab6eea4bfb alembic revision --autogenerate -m "Initial migration" && docker exec -it 09ab6eea4bfb alembic upgrade head
+
+    OR (Update docker file) ------
+    
+    CMD ["sh", "-c", "alembic revision --autogenerate -m 'Initial migration' && alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"]
