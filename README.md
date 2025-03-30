@@ -2,6 +2,7 @@
 config:
       theme: redux
 ---
+```mermaid
 flowchart TD;
     A["User Service Start"]
     
